@@ -1,0 +1,33 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:unit-test;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    initialization-mode: always
+  jpa:
+    open-in-view: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+jwt:
+  secret: 65a4de4bd62a7c1e9c4373336b0fb8dc
+  expiration: 180000
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+info:
+  app:
+    name: "@project.name@"
+    version: "@project.version@"
