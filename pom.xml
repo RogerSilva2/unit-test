@@ -12,7 +12,7 @@
 	<artifactId>unit-test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>unit-test</name>
-	<description>Projeto demonstrarivo de testes unitários</description>
+	<description>Projeto demonstrativo de testes unitários</description>
 
 	<properties>
 		<java.version>11</java.version>
