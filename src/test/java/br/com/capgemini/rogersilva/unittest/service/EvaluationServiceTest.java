@@ -1,16 +1,14 @@
 package br.com.capgemini.rogersilva.unittest.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.Mockito.when;
-
 import java.util.Optional;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.capgemini.rogersilva.unittest.dto.EvaluationDto;
@@ -62,45 +60,46 @@ public class EvaluationServiceTest {
 
     @Test
     public void createEvaluation() throws BadRequestException, NotFoundException {
-        when(processRepository.findById(mockProcess.getId())).thenReturn(Optional.of(mockProcess));
+        Mockito.when(processRepository.findById(mockProcess.getId())).thenReturn(Optional.of(mockProcess));
 
-        when(evaluationRepository.findById(mockEvaluationId)).thenReturn(Optional.of(mockEvaluation));
+        Mockito.when(evaluationRepository.findById(mockEvaluationId)).thenReturn(Optional.of(mockEvaluation));
 
-        when(evaluationRepository.save(ArgumentMatchers.any(Evaluation.class))).thenReturn(mockEvaluation);
+        Mockito.when(evaluationRepository.save(ArgumentMatchers.any(Evaluation.class))).thenReturn(mockEvaluation);
 
         EvaluationDto evaluation = evaluationService.createEvaluation(
                 EvaluationDto.builder().processId(mockProcess.getId()).feedback(FEEDBACK).build(), mockUser);
 
-        assertThat(evaluation).isEqualTo(mockEvaluationDto);
+        Assertions.assertThat(evaluation).isEqualTo(mockEvaluationDto);
     }
 
     @Test
     public void createEvaluationProcessNotFound() {
-        when(processRepository.findById(mockProcess.getId())).thenReturn(Optional.empty());
+        Mockito.when(processRepository.findById(mockProcess.getId())).thenReturn(Optional.empty());
 
         try {
             evaluationService.createEvaluation(
                     EvaluationDto.builder().processId(mockProcess.getId()).feedback(FEEDBACK).build(), mockUser);
-            fail("BadRequestException should have been generated");
+            Assertions.fail("BadRequestException should have been generated");
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(BadRequestException.class);
-            assertThat(e.getMessage()).isEqualTo(String.format("Process with id %s not found", mockProcess.getId()));
+            Assertions.assertThat(e).isInstanceOf(BadRequestException.class);
+            Assertions.assertThat(e.getMessage())
+                    .isEqualTo(String.format("Process with id %s not found", mockProcess.getId()));
         }
     }
 
     @Test
     public void createEvaluationEvaluationNotFound() {
-        when(processRepository.findById(mockProcess.getId())).thenReturn(Optional.of(mockProcess));
+        Mockito.when(processRepository.findById(mockProcess.getId())).thenReturn(Optional.of(mockProcess));
 
-        when(evaluationRepository.findById(mockEvaluationId)).thenReturn(Optional.empty());
+        Mockito.when(evaluationRepository.findById(mockEvaluationId)).thenReturn(Optional.empty());
 
         try {
             evaluationService.createEvaluation(
                     EvaluationDto.builder().processId(mockProcess.getId()).feedback(FEEDBACK).build(), mockUser);
-            fail("NotFoundException should have been generated");
+            Assertions.fail("NotFoundException should have been generated");
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(NotFoundException.class);
-            assertThat(e.getMessage())
+            Assertions.assertThat(e).isInstanceOf(NotFoundException.class);
+            Assertions.assertThat(e.getMessage())
                     .isEqualTo(String.format("Evaluation for user with id %s and process with id %s not found",
                             mockUser.getId(), mockProcess.getId()));
         }

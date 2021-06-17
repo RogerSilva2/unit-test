@@ -1,10 +1,11 @@
 package br.com.capgemini.rogersilva.unittest.dto;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_WRITE;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,7 @@ public class EvaluationDto extends Dto {
     private static final long serialVersionUID = -2841048000812434490L;
 
     @NotNull(message = "Process id cannot be null")
-    @JsonProperty(access = Access.READ_WRITE)
+    @JsonProperty(access = READ_WRITE)
     private Long processId;
 
     @NotBlank(message = "Feedback cannot be blank")

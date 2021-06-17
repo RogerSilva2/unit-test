@@ -1,5 +1,8 @@
 package br.com.capgemini.rogersilva.unittest.dto;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_WRITE;
+
 import java.util.List;
 
 import javax.validation.constraints.Max;
@@ -7,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +30,7 @@ public class ProcessDto extends Dto {
 
     private static final long serialVersionUID = -7822832149520156343L;
 
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty(access = READ_ONLY)
     private Long id;
 
     @Max(value = 50, message = "Name must be less than or equal to 50")
@@ -39,6 +41,6 @@ public class ProcessDto extends Dto {
     private String content;
 
     @NotEmpty(message = "Evaluator ids cannot be empty")
-    @JsonProperty(access = Access.READ_WRITE)
+    @JsonProperty(access = READ_WRITE)
     private List<Long> evaluatorIds;
 }

@@ -1,10 +1,11 @@
 package br.com.capgemini.rogersilva.unittest.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 import java.util.List;
 import java.util.Optional;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -13,7 +14,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import br.com.capgemini.rogersilva.unittest.model.Evaluation;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = NONE)
 public class EvaluationRepositoryTest {
 
     @Autowired
@@ -25,16 +26,16 @@ public class EvaluationRepositoryTest {
 
         Optional<List<Evaluation>> evaluations = evaluationRepository.findByIdEvaluatorId(evaluatorId);
 
-        assertThat(evaluations).isPresent();
-        assertThat(evaluations.get()).isNotEmpty();
-        assertThat(evaluations.get().get(0).getId().getEvaluator().getId()).isEqualTo(evaluatorId);
+        Assertions.assertThat(evaluations).isPresent();
+        Assertions.assertThat(evaluations.get()).isNotEmpty();
+        Assertions.assertThat(evaluations.get().get(0).getId().getEvaluator().getId()).isEqualTo(evaluatorId);
     }
 
     @Test
     public void findByIdEvaluatorIdNotFound() {
         Optional<List<Evaluation>> evaluations = evaluationRepository.findByIdEvaluatorId(0L);
 
-        assertThat(evaluations).isPresent();
-        assertThat(evaluations.get()).isEmpty();
+        Assertions.assertThat(evaluations).isPresent();
+        Assertions.assertThat(evaluations.get()).isEmpty();
     }
 }

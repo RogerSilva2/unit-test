@@ -1,9 +1,10 @@
 package br.com.capgemini.rogersilva.unittest.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 import java.util.Optional;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -12,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import br.com.capgemini.rogersilva.unittest.model.User;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = NONE)
 public class UserRepositoryTest {
 
     @Autowired
@@ -24,15 +25,15 @@ public class UserRepositoryTest {
 
         Optional<User> user = userRepository.findByUsername(username);
 
-        assertThat(user).isPresent();
-        assertThat(user.get()).isNotNull();
-        assertThat(user.get().getUsername()).isEqualTo(username);
+        Assertions.assertThat(user).isPresent();
+        Assertions.assertThat(user.get()).isNotNull();
+        Assertions.assertThat(user.get().getUsername()).isEqualTo(username);
     }
 
     @Test
     public void findByUsernameNotFound() {
         Optional<User> user = userRepository.findByUsername("john-doe");
 
-        assertThat(user).isNotPresent();
+        Assertions.assertThat(user).isNotPresent();
     }
 }

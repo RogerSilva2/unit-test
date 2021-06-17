@@ -1,9 +1,10 @@
 package br.com.capgemini.rogersilva.unittest.config;
 
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
+
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -22,7 +23,7 @@ public class CorsFilterConfiguration {
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        bean.setOrder(HIGHEST_PRECEDENCE);
         return bean;
     }
 }

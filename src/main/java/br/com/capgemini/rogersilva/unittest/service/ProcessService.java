@@ -1,5 +1,7 @@
 package br.com.capgemini.rogersilva.unittest.service;
 
+import static br.com.capgemini.rogersilva.unittest.model.Role.EVALUATOR;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +15,6 @@ import br.com.capgemini.rogersilva.unittest.exception.BadRequestException;
 import br.com.capgemini.rogersilva.unittest.model.Evaluation;
 import br.com.capgemini.rogersilva.unittest.model.EvaluationId;
 import br.com.capgemini.rogersilva.unittest.model.Process;
-import br.com.capgemini.rogersilva.unittest.model.Role;
 import br.com.capgemini.rogersilva.unittest.model.User;
 import br.com.capgemini.rogersilva.unittest.repository.EvaluationRepository;
 import br.com.capgemini.rogersilva.unittest.repository.ProcessRepository;
@@ -59,7 +60,7 @@ public class ProcessService {
             User evaluator = userRepository.findById(evaluatorId).orElseThrow(
                     () -> new BadRequestException(String.format("User with id %s not found", evaluatorId)));
 
-            if (!evaluator.getRole().equals(Role.EVALUATOR)) {
+            if (!evaluator.getRole().equals(EVALUATOR)) {
                 throw new BadRequestException(String.format("User with id %s not is evaluator", evaluatorId));
             }
 

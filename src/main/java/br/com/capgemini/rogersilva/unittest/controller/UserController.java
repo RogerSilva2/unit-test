@@ -1,11 +1,13 @@
 package br.com.capgemini.rogersilva.unittest.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -39,7 +41,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
+        return ResponseEntity.status(CREATED).body(userService.createUser(userDto));
     }
 
     @PutMapping("/{user_id}")
@@ -49,7 +51,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{user_id}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @ResponseStatus(value = NO_CONTENT)
     public void deleteUser(@PathVariable("user_id") Long userId) throws NotFoundException {
         userService.deleteUser(userId);
     }

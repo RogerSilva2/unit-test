@@ -1,9 +1,10 @@
 package br.com.capgemini.rogersilva.unittest.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -31,7 +32,7 @@ public class EvaluationController {
     @PostMapping
     public ResponseEntity<EvaluationDto> createEvaluation(Authentication authentication,
             @Valid @RequestBody EvaluationDto evaluationDto) throws BadRequestException, NotFoundException {
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity.status(CREATED)
                 .body(evaluationService.createEvaluation(evaluationDto, (User) authentication.getPrincipal()));
     }
 }

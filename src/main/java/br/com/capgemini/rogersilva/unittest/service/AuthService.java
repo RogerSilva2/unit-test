@@ -1,5 +1,7 @@
 package br.com.capgemini.rogersilva.unittest.service;
 
+import static io.jsonwebtoken.SignatureAlgorithm.HS256;
+
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -12,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.capgemini.rogersilva.unittest.dto.AccessTokenDto;
 import br.com.capgemini.rogersilva.unittest.model.User;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 @Transactional
@@ -32,7 +33,7 @@ public class AuthService {
         Date expirationDate = new Date(now.getTime() + expiration);
 
         String accessToken = Jwts.builder().setIssuer("Process Manager API").setSubject(user.getId().toString())
-                .setIssuedAt(now).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS256, secret).compact();
+                .setIssuedAt(now).setExpiration(expirationDate).signWith(HS256, secret).compact();
 
         return AccessTokenDto.builder().accessToken(accessToken).tokenType("Bearer").build();
     }
